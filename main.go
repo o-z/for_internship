@@ -36,8 +36,9 @@ func set_get(w http.ResponseWriter, r *http.Request) {
 		}
 		price = prices(number1, number2, number3, number4)
 		fltB, _ := json.Marshal(price)
-		fmt.Fprintf(w, string(fltB)) // print
-
+		fmt.Fprintf(w, "json:"+string(fltB)) // print
+		fmt.Fprintln(w)
+		fmt.Fprintf(w, "sonuc: %f", price)
 	default:
 		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
 	}
