@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -34,8 +35,8 @@ func set_get(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 		price = prices(number1, number2, number3, number4)
-
-		fmt.Fprintf(w, "price = %f ", price) // print
+		fltB, _ := json.Marshal(price)
+		fmt.Fprintf(w, string(fltB)) // print
 
 	default:
 		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
@@ -51,7 +52,6 @@ func prices(number1 int, number2 int, number3 int, number4 int) float32 {
 	important_date := []int{1905, 1903, 1923}
 	if number1 == number2 && number2 == number3 && number3 == number4 { //Son 4 rakamı aynı olan numaralardan
 		price = price + kdv(1000)
-
 	} else if prefix == 850 || prefix == 885 { // Ön prefix ile simetrik numaralardan
 		price = price + kdv(1000)
 	} else if number2 == number3 && number3 == number4 { // Son 3 rakamı aynı olan numaralardan
